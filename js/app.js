@@ -5,6 +5,9 @@ const gridContainer = document.querySelector(".grid-container");
 const overlay = document.querySelector(".overlay");
 const modalContainer = document.querySelector(".modal-content");
 const modalClose = document.querySelector(".modal-close");
+const rightBtn = document.querySelector(".rightBtn");
+const leftBtn = document.querySelector(".leftBtn");
+
 
 
 fetch(urlAPI)
@@ -29,7 +32,7 @@ function displayEmployees(employeeData) {
             <div class="card" data-index="${index}">
                 <img class="avatar" src="${picture.large}" />
                 <div class="text-container">
-                    <h2 class="name">${name.first}</h2>
+                    <h2 class="name">${name.first} ${name.last}</h2>
                     <p class="email">${email}</p>
                     <p class="address">${city}</p>
                 </div>
@@ -42,8 +45,14 @@ function displayEmployees(employeeData) {
 
 function displayModal(index){
     
-    let { name, dob, phone, email, location: { city, street, state, postcode
-    }, picture } = employees[index];
+    let { 
+        name, 
+        dob, 
+        phone, 
+        email, 
+        location: { city, street, state, postcode}, 
+        picture 
+    } = employees[index];
 
     let date = new Date(dob.date);
 
@@ -53,15 +62,32 @@ function displayModal(index){
             <h2 class="name">${name.first} ${name.last}</h2>
             <p class="email">${email}</p>
             <p class="address">${city}</p>
-            <hr />
-            <p>${phone}</p>
-            <p class="address">${street}, ${state}, ${postcode}</p>
-            <p>Birthday:${date.getMonth()}/${date.getDate()}/${date.getFullYear()}</p>
+            <br />
+            <p class="phone">${phone}</p>
+            <p class="address">${street.number} ${street.name}, ${state}, ${postcode}</p>
+            <p class="birthday">Birthday:${date.getMonth()}/${date.getDate()}/${date.getFullYear()}</p>
         </div>
     `;
     overlay.classList.remove("hidden");
     modalContainer.innerHTML = modalHTML;
+
+
+    rightBtn.addEventListener('click', () => {
+        if (index < 11) {
+            const nextIndex = parseInt(index) += 1;
+            displayModal(nextIndex);
+        }
+    });
+
+    leftBtn.addEventListener('click', () => {
+        if (index > 0) {
+            const previousIndex = parseInt(index) -= 1;
+            displayModal(previousIndex);
+        }
+     });
 }
+
+
 
 gridContainer.addEventListener('click' , e => {
     
@@ -79,3 +105,4 @@ modalClose.addEventListener('click', () => {
         overlay.classList.add("hidden");
     
 });
+
