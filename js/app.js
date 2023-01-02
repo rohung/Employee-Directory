@@ -44,7 +44,9 @@ function displayEmployees(employeeData) {
 }
 
 function displayModal(index){
-    
+
+
+
     let { 
         name, 
         dob, 
@@ -71,17 +73,27 @@ function displayModal(index){
     overlay.classList.remove("hidden");
     modalContainer.innerHTML = modalHTML;
 
+   
+    if(index === 0) {
+        leftBtn.style.display = 'none';
+    }
+
+    if(index === 11) {
+        rightBtn.style.display = 'none';
+    }
+    
+
 
     rightBtn.addEventListener('click', () => {
         if (index < 11) {
-            const nextIndex = parseInt(index) += 1;
+            const nextIndex = parseInt(index) + 1;
             displayModal(nextIndex);
         }
     });
 
     leftBtn.addEventListener('click', () => {
         if (index > 0) {
-            const previousIndex = parseInt(index) -= 1;
+            const previousIndex = parseInt(index) - 1;
             displayModal(previousIndex);
         }
      });
