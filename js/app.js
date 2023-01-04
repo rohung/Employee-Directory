@@ -44,8 +44,8 @@ function displayEmployees(employeeData) {
 }
 
 function displayModal(index){
-
-
+    
+    console.log(index);
 
     let { 
         name, 
@@ -74,29 +74,37 @@ function displayModal(index){
     modalContainer.innerHTML = modalHTML;
 
    
-    if(index === 0) {
-        leftBtn.style.display = 'none';
+    if( parseInt(index) === 0) {
+       leftBtn.classList.add("hidden");
+    } else {
+        leftBtn.classList.remove('hidden');
     }
-
-    if(index === 11) {
-        rightBtn.style.display = 'none';
+    
+    if(parseInt(index) === 11) {
+        rightBtn.classList.add("hidden");
+    } else {
+        rightBtn.classList.remove('hidden');
     }
     
 
 
     rightBtn.addEventListener('click', () => {
         if (index < 11) {
-            const nextIndex = parseInt(index) + 1;
-            displayModal(nextIndex);
+            index += 1;
+            displayModal(parseInt(index));
+            
         }
     });
 
     leftBtn.addEventListener('click', () => {
         if (index > 0) {
-            const previousIndex = parseInt(index) - 1;
-            displayModal(previousIndex);
+            index -= 1;
+            displayModal(parseInt(index));
+            
         }
      });
+
+     
 }
 
 
