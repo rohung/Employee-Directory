@@ -3,11 +3,12 @@ const urlAPI =`https://randomuser.me/api/?results=12&inc=name, picture,
                 email, location, phone, dob &noinfo &nat=US`
 const gridContainer = document.querySelector(".grid-container");
 const overlay = document.querySelector(".overlay");
+const modal = document.querySelector(".modal");
 const modalContainer = document.querySelector(".modal-content");
 const modalClose = document.querySelector(".modal-close");
 const rightBtn = document.querySelector(".rightBtn");
 const leftBtn = document.querySelector(".leftBtn");
-
+let nextIndex = 0;
 
 
 fetch(urlAPI)
@@ -87,42 +88,50 @@ function displayModal(index){
     }
     
 
-
-    rightBtn.addEventListener('click', () => {
-        if (index < 11) {
-            index += 1;
-            displayModal(parseInt(index));
-            
-        }
-    });
-
-    leftBtn.addEventListener('click', () => {
-        if (index > 0) {
-            index -= 1;
-            displayModal(parseInt(index));
-            
-        }
-     });
+}
+    
 
      
-}
-
-
 
 gridContainer.addEventListener('click' , e => {
     
     if(e.target !== gridContainer) {
         
         const card = e.target.closest(".card");
-        const index = card.getAttribute('data-index');
+        let index = card.getAttribute('data-index');
         
         displayModal(index);
     }
-});
-
-modalClose.addEventListener('click', () => {
-    
-        overlay.classList.add("hidden");
     
 });
 
+
+// modalClose.addEventListener('click', () => {
+    
+//         overlay.classList.add("hidden");
+    
+// });
+
+modal.addEventListener('click', (e) => {
+    console.log(index);
+    if(e.target.classList.contains('rightBtn')) {
+        
+            displayModal(parseInt(index) );
+        }
+});
+
+// rightBtn.addEventListener('click', () => {
+//     if (index < 11) {
+//         index += 1;
+//         displayModal(parseInt(index));
+        
+//     }
+// });
+
+// leftBtn.addEventListener('click', () => {
+//     if (index > 0) {
+//         index -= 1;
+//         displayModal(parseInt(index));
+        
+//     }
+//  });
