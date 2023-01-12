@@ -8,7 +8,7 @@ const modalContainer = document.querySelector(".modal-content");
 const modalClose = document.querySelector(".modal-close");
 const rightBtn = document.querySelector(".rightBtn");
 const leftBtn = document.querySelector(".leftBtn");
-let nextIndex = 0;
+let index;
 
 
 fetch(urlAPI)
@@ -30,7 +30,7 @@ function displayEmployees(employeeData) {
         let picture = employee.picture;
 
         employeeHTML += `
-            <div class="card" data-index="${index}">
+            <div class="card" data-index="${index}" data-caption=${name.first}${name.last}>
                 <img class="avatar" src="${picture.large}" />
                 <div class="text-container">
                     <h2 class="name">${name.first} ${name.last}</h2>
@@ -68,7 +68,7 @@ function displayModal(index){
             <br />
             <p class="phone">${phone}</p>
             <p class="address">${street.number} ${street.name}, ${state}, ${postcode}</p>
-            <p class="birthday">Birthday:${date.getMonth()}/${date.getDate()}/${date.getFullYear()}</p>
+            <p class="birthday">Birthday: ${date.getMonth()}/${date.getDate()}/${date.getFullYear()}</p>
         </div>
     `;
     overlay.classList.remove("hidden");
@@ -98,40 +98,29 @@ gridContainer.addEventListener('click' , e => {
     if(e.target !== gridContainer) {
         
         const card = e.target.closest(".card");
-        let index = card.getAttribute('data-index');
+        index = card.getAttribute('data-index');
         
         displayModal(index);
+        
     }
     
 });
 
 
-// modalClose.addEventListener('click', () => {
-    
-//         overlay.classList.add("hidden");
-    
-// });
+
 
 modal.addEventListener('click', (e) => {
-    console.log(index);
-    if(e.target.classList.contains('rightBtn')) {
-        
-            displayModal(parseInt(index) );
-        }
+    
+    parseInt(index);
+    if(e.target === rightBtn) {
+        index++;
+        displayModal(index);
+    } else if(e.target === leftBtn){
+        index--;
+        displayModal(index);
+    } else if (e.target === modalClose) {
+        overlay.classList.add("hidden");
+    }
+
 });
 
-// rightBtn.addEventListener('click', () => {
-//     if (index < 11) {
-//         index += 1;
-//         displayModal(parseInt(index));
-        
-//     }
-// });
-
-// leftBtn.addEventListener('click', () => {
-//     if (index > 0) {
-//         index -= 1;
-//         displayModal(parseInt(index));
-        
-//     }
-//  });
